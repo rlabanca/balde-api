@@ -15,7 +15,7 @@
  *
  */
 
-package org.baldeapi.web;
+package org.baldeapi.v1.persistence;
 
 import java.util.List;
 
@@ -39,6 +39,22 @@ public class GenericDAO {
     public List<DBObject> find(DBObject filter, DBObject sort, int skip, int limit) {
     	
 		DBCursor cursor = collection.find(filter).sort(sort).skip(skip).limit(limit);
+		
+		List<DBObject> result = null;
+		
+		try {
+			result = cursor.toArray();
+		} finally {
+			cursor.close();
+		}
+        
+        return result;
+        
+    }
+    
+    public List<DBObject> find(DBObject filter, DBObject projection, DBObject sort, int skip, int limit) {
+    	
+		DBCursor cursor = collection.find(filter, projection).sort(sort).skip(skip).limit(limit);
 		
 		List<DBObject> result = null;
 		

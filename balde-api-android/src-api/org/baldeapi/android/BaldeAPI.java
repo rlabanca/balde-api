@@ -2,6 +2,7 @@ package org.baldeapi.android;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
+import java.net.URLEncoder;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -200,25 +201,29 @@ public class BaldeAPI {
 			if (filter != null) {
 				builder.append("filter");
 				builder.append("=");
-				builder.append(filter.toString());
+				builder.append(URLEncoder.encode(filter.toString()));
+				builder.append("&");
 			}
 			
 			if (sort != null) {
 				builder.append("sort");
 				builder.append("=");
-				builder.append(sort.toString());
+				builder.append(URLEncoder.encode(sort.toString()));
+				builder.append("&");
 			}
 			
 			if (skip != null) {
 				builder.append("skip");
 				builder.append("=");
 				builder.append(skip);
+				builder.append("&");
 			}
 			
 			if (limit != null) {
 				builder.append("limit");
 				builder.append("=");
 				builder.append(limit);
+				builder.append("&");
 			}
 		}
 		

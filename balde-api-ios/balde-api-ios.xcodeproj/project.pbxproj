@@ -10,6 +10,8 @@
 		6A83417C170B8BA1006B7844 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A83417B170B8BA1006B7844 /* Foundation.framework */; };
 		6A83418F170BB899006B7844 /* BaldeAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A83418E170BB899006B7844 /* BaldeAPI.m */; };
 		6A834196170BC2D0006B7844 /* BaldeAPIResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A834195170BC2D0006B7844 /* BaldeAPIResponse.m */; };
+		6A8341A7170F12EC006B7844 /* BaldeAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = 6A83418D170BB899006B7844 /* BaldeAPI.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6A8341A8170F12EC006B7844 /* BaldeAPIResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 6A834194170BC2D0006B7844 /* BaldeAPIResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -93,6 +95,18 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		6A8341A6170F12CB006B7844 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6A8341A7170F12EC006B7844 /* BaldeAPI.h in Headers */,
+				6A8341A8170F12EC006B7844 /* BaldeAPIResponse.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
 		6A834177170B8BA1006B7844 /* balde-api-ios */ = {
 			isa = PBXNativeTarget;
@@ -101,6 +115,7 @@
 				6A834174170B8BA1006B7844 /* Sources */,
 				6A834175170B8BA1006B7844 /* Frameworks */,
 				6A834176170B8BA1006B7844 /* CopyFiles */,
+				6A8341A6170F12CB006B7844 /* Headers */,
 			);
 			buildRules = (
 			);
