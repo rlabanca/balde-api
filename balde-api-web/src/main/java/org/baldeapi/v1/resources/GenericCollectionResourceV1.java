@@ -22,13 +22,10 @@ import org.baldeapi.v1.persistence.GenericDAO;
 import org.baldeapi.v1.persistence.MongoManager;
 import org.baldeapi.v1.representation.ErrorsRepresentationV1;
 import org.baldeapi.v1.resources.business.BusinessMapper;
-import org.baldeapi.v1.resources.util.FilterParser;
 import org.baldeapi.v1.resources.util.FilterValidator;
-import org.baldeapi.v1.resources.util.ProjectionMapper;
-import org.baldeapi.v1.resources.util.SortParser;
 import org.baldeapi.v1.resources.util.FilterValidator.FilterValidation;
+import org.baldeapi.v1.resources.util.ProjectionMapper;
 import org.baldeapi.v1.security.User;
-
 
 import com.mongodb.DBObject;
 import com.mongodb.util.JSON;
@@ -40,15 +37,15 @@ public class GenericCollectionResourceV1 {
 	@RolesAllowed({"GRANTED"})
 	@Produces({MediaType.APPLICATION_JSON})
 	public Response get( @PathParam("resource")		String resource
-					   , @QueryParam("filter") 		List<String> filters
-					   , @QueryParam("sort")		List<String> sortFields
+					   , @QueryParam("filter") 		String filters
+					   , @QueryParam("sort")		String sortFields
 					   , @QueryParam("limit")
 						 @DefaultValue("10")		Integer limit
 					   , @QueryParam("skip")		
 						 @DefaultValue("0")			Integer skip
 					   ) {
 		
-		DBObject filter = FilterParser.getInstance(resource).parse(filters);
+		DBObject filter = (DBObject) JSON.parse(filters);
 		
 		FilterValidation validation = FilterValidator.getInstance(resource).validate(filter);
 		
@@ -60,7 +57,7 @@ public class GenericCollectionResourceV1 {
 			
 		}
 		
-		DBObject sort = SortParser.getInstance(resource).parse(sortFields);
+		DBObject sort = (DBObject) JSON.parse(sortFields);
 		
 		GenericDAO dao = new GenericDAO(MongoManager.getDatabase(), resource);
 		
@@ -91,7 +88,7 @@ public class GenericCollectionResourceV1 {
 	@POST
 	@Produces("application/json")
 	@Consumes("application/json")
-	@RolesAllowed({"GRANTED","BPSSOAUTH"})
+	@RolesAllowed({"GRANTED"})
 	public Response post( @PathParam("resource")	String	resource
 						, @Context 					UriInfo uriInfo
 						, @Context					SecurityContext securityContext
