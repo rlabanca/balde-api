@@ -21,7 +21,9 @@ import java.util.List;
 
 import org.bson.types.ObjectId;
 
+import com.mongodb.AggregationOutput;
 import com.mongodb.BasicDBObject;
+import com.mongodb.BasicDBObjectBuilder;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
@@ -31,6 +33,11 @@ public class GenericDAO {
     DBCollection collection;
     String collectionName;
 
+    public GenericDAO(final String collectionName) {
+        collection = MongoManager.getDatabase().getCollection(collectionName);
+        this.collectionName = collectionName;
+    }
+    
     public GenericDAO(final DB database, final String collectionName) {
         collection = database.getCollection(collectionName);
         this.collectionName = collectionName;
@@ -96,6 +103,22 @@ public class GenericDAO {
 		return object;
 		
 	}
+	
+	public DBObject updateFields(DBObject query, DBObject object) {
+		
+		return updateFields(query, object, false);
+		
+	}
+	
+	public DBObject updateFields(DBObject query, DBObject object, boolean multi) {
+		
+		object = BasicDBObjectBuilder.start("$set", object).get();
+		
+		collection.update(query, object, false, multi);
+		
+		return object;
+		
+	}
 
 	public void delete(String id) {
 		
@@ -104,5 +127,19 @@ public class GenericDAO {
 		collection.remove(object);
 		
 	}
+	
+	public AggregationOutput aggregate(DBObject firstOp, DBObject... additionalOps){
+		return collection.aggregate(firstOp, additionalOps);
+	}
+	
+	public DBObject aggregateFirstResult(DBObject firstOp, DBObject... additionalOps) {
+		AggregationOutput result = this.aggregate(firstOp, additionalOps);
+		for (DBObject object : result.results()) {
+			return object;
+		}
+		return null;
+	}
+	
+	
 
 }

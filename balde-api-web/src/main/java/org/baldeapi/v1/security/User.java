@@ -9,6 +9,7 @@ public class User implements java.security.Principal {
 	
 	public enum Role {
 		GRANTED(401, "Invalid or null api key. Check the X-API-Key header."),
+		AUTH(401, "Invalid or null Auth Token. Check the X-AuthToken header."),
 		BPSSOAUTH(401, "Invalid or null Single Sign On Token. Check the X-BP-SSOToken header.");
 		
 		private String message;
@@ -29,7 +30,7 @@ public class User implements java.security.Principal {
 		
 	}
 	
-	private Long id;
+	private String id;
 	
 	private String authProvider;
 	
@@ -39,16 +40,26 @@ public class User implements java.security.Principal {
 	
 	private String email;
 	
+	private String cpf;
+	
+	private String phone;
+	
+	private String gender;
+	
 	private Set<Role> roles;
 
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
+	public void setId(Long id) {
+		this.id = Long.toString(id);
+	}
+	
 	public String getApiKey() {
 		return apiKey;
 	}
@@ -94,6 +105,34 @@ public class User implements java.security.Principal {
 
 	public String getName() {
 		return name;
+	}
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+	
+	public boolean isComplete() {
+		return !(email == null || name == null || gender == null || phone == null || cpf == null);
 	}
 	
 }

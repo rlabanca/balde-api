@@ -56,6 +56,11 @@ public class ProjectionMapper {
 	public DBObject project() {
 		
 		BasicDBObject projection = new BasicDBObject();
+		projection.put("name", true);
+		projection.put("code", true);
+		projection.put("provider", true);
+		projection.put("thumb", true);
+		projection.put("type", true);
 		
 		return projection;
 		

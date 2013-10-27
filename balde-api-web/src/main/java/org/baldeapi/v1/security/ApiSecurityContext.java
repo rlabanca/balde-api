@@ -10,7 +10,6 @@ import org.baldeapi.v1.representation.ErrorRepresentationV1;
 import org.baldeapi.v1.representation.ErrorType;
 import org.baldeapi.v1.security.User.Role;
 
-
 public class ApiSecurityContext implements javax.ws.rs.core.SecurityContext {
  
     private final User user;

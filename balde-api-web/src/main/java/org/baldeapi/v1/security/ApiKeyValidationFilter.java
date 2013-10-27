@@ -1,15 +1,10 @@
 package org.baldeapi.v1.security;
 
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
 import javax.ws.rs.ext.Provider;
 
 import org.baldeapi.v1.persistence.GenericDAO;
 import org.baldeapi.v1.persistence.MongoManager;
 import org.baldeapi.v1.security.User.Role;
-
 
 import com.mongodb.BasicDBObjectBuilder;
 import com.mongodb.DBObject;
@@ -26,7 +21,7 @@ public class ApiKeyValidationFilter implements ContainerRequestFilter, ResourceF
 		
 		String apiKey = request.getHeaderValue("X-API-Key");
 		
-		apiKey = md5(apiKey);
+		apiKey = MD5.make(apiKey);
 		
 		GenericDAO dao = new GenericDAO(MongoManager.getDatabase(), "apikeys");
 		DBObject apiKeyObject = dao.findOne(BasicDBObjectBuilder.start("_id", apiKey).get());
@@ -43,21 +38,6 @@ public class ApiKeyValidationFilter implements ContainerRequestFilter, ResourceF
 		
 	}
 	
-	 public String md5(String senha){
-		if (senha == null) {
-			return null;
-		}
-        String sen = "";  
-        MessageDigest md = null;  
-        try {  
-            md = MessageDigest.getInstance("MD5");  
-        } catch (NoSuchAlgorithmException e) {
-        }  
-        BigInteger hash = new BigInteger(1, md.digest(senha.getBytes()));  
-        sen = hash.toString(16);              
-        return sen;  
-    }
-
 	@Override
 	public ContainerRequestFilter getRequestFilter() {
 		return this;
