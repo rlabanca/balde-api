@@ -26,8 +26,7 @@ public class InitServlet extends HttpServlet {
 	 */
 	public void init(ServletConfig config) throws ServletException {
 		
-		//TODO implementar a configura��o de banco de dados
-		MongoManager.init("mongodb://localhost", "lastminute");
+		MongoManager.init("mongodb://localhost", MongoManager.getDatabaseFromEnviroment());
 		
 	}
 
